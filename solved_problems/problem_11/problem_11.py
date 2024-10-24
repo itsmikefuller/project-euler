@@ -36,7 +36,7 @@ def greatest_row_product(matrix: pd.DataFrame, matrix_size: int, length: int) ->
             if product > greatest_row_product: 
                 greatest_row_product = product
                 greatest_product_components = [row[i] for i in range(j, j+length)]
-    print(f"Greatest product obtained by {greatest_product_components}")
+    print(greatest_product_components)
     return greatest_row_product
 
 
@@ -52,7 +52,7 @@ def greatest_southeast_diag_product(matrix: pd.DataFrame, matrix_size: int, leng
             if product > greatest_diag_product: 
                 greatest_diag_product = product
                 greatest_product_components = [matrix.iloc[i+k][j+k] for k in range(length)]
-    print(f"Greatest product obtained by {greatest_product_components}")
+    print(greatest_product_components)
     return greatest_diag_product
 
 
@@ -66,24 +66,37 @@ def find_greatest_product(matrix: pd.DataFrame, length: int) -> int:
     
     # Row products: for each row, compute products and update largest product when found
     max_row_product = greatest_row_product(matrix=matrix, matrix_size=matrix_size, length=length)
+    print(f"Greatest row product: {max_row_product}")
     
     # Col products: transpose matrix and re-run row product function
     max_col_product = greatest_row_product(matrix=matrix.transpose(), matrix_size=matrix_size, length=length)
+    print(f"Greatest col product: {max_col_product}")
     
     # "Southeast" diagonal products: find maximum diagonal product where row/col indices increase
     max_southeast_diag_product = greatest_southeast_diag_product(matrix=matrix, matrix_size=matrix_size, length=length)
+    print(f"Greatest southeast diag product: {max_southeast_diag_product}")
 
     # "Southwest" diagonal products: reverse rows of matrix and re-run southeast product function
     max_southwest_diag_product = greatest_southeast_diag_product(matrix=matrix.iloc[::-1], matrix_size=matrix_size, length=length)
-    
-    # See results in console
-    print(f"Max row product: {max_row_product}")
-    print(f"Max col product: {max_col_product}")
-    print(f"Max southeast diag product: {max_southeast_diag_product}")
-    print(f"Max southwest diag product: {max_southwest_diag_product}")
+    print(f"Greatest southwest diag product: {max_southwest_diag_product}")
 
     return max(max_row_product, max_col_product, max_southeast_diag_product, max_southwest_diag_product)
 
 
 matrix = convert_str_to_matrix(grid=grid, grid_size=grid_size)
-print(find_greatest_product(matrix=matrix, length=4))
+print(f'Answer: {find_greatest_product(matrix=matrix, length=4)}')
+
+
+'''
+Results:
+
+[66, 91, 88, 97]
+Greatest row product: 51267216
+[78, 78, 96, 83]
+Greatest col product: 48477312
+[94, 99, 71, 61]
+Greatest southeast diag product: 40304286
+[89, 94, 97, 87]
+Greatest southwest diag product: 70600674
+Answer: 70600674
+'''
