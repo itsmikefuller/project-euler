@@ -8,7 +8,7 @@ Work out the first ten digits of the sum of the following one-hundred 50-digit n
 from numbers import numbers
 
 
-'''A note on code performance simplification: 
+'''A note on code performance: 
 
 We don't need to sum 50-digit numbers here, just the 11-digit numbers comprised of the first
 11 digits of each 50-digit number. Why?
@@ -17,7 +17,7 @@ Sketch proof: Let n_1, n_2, ..., n_100 be the 50-digit numbers to add. Naively, 
 get the same first 10 digits of sum(n_i) by summing 100 10-digit numbers equal to the first 10
 digits of each 50-digit number. Break each n_i into two components, F_i and l_i, where
 
-F_i = (n_i - A_i), i.e. 50-digit number where the first 10 digits are the same as n_i, other digits 0,
+F_i = (n_i - l_i), i.e. 50-digit number where the first 10 digits are the same as n_i, other digits 0,
 
 l_i = (n_i %% 10**39), i.e. the 40-digit number comprised of the last 40 digits of n_i.
 
