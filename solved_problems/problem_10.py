@@ -16,7 +16,8 @@ def sum_primes_below_n(n: int) -> int:
     for test_prime in range(2, n):
         if is_prime[test_prime]:
             sum += test_prime
-            for i in range(test_prime ** 2, n, test_prime): is_prime[i] = False
+            # Mark all multiples of test_prime as not prime
+            for i in range(2 * test_prime, n, test_prime): is_prime[i] = False
     
     return sum
 
