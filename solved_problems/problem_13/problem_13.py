@@ -5,7 +5,7 @@ https://projecteuler.net/problem=13
 Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.'''
 
 
-from numbers import numbers
+from numbers import NUMBERS
 
 
 '''A note on code performance: 
@@ -17,9 +17,9 @@ Sketch proof: Let n_1, n_2, ..., n_100 be the 50-digit numbers to add. Naively, 
 get the same first 10 digits of sum(n_i) by summing 100 10-digit numbers equal to the first 10
 digits of each 50-digit number. Break each n_i into two components, F_i and l_i, where
 
-F_i = (n_i - l_i), i.e. 50-digit number where the first 10 digits are the same as n_i, other digits 0,
+F_i = (n_i - l_i), i.e. 50-digit number where the FIRST 10 digits are the same as n_i, other digits 0,
 
-l_i = (n_i %% 10**39), i.e. the 40-digit number comprised of the last 40 digits of n_i.
+l_i = (n_i %% 10**39), i.e. the 40-digit number comprised of the LAST 40 digits of n_i.
 
 Then sum(n_i) = sum(F_i) + sum(l_i). Note that sum(n_i) in [100 * min(n_i), 100 * max(n_i)], 
 so sum(n_i) is exactly 52 digits long. Similarly, sum(l_i) is exactly 42 digits long, and sum(F_i) is
@@ -58,6 +58,6 @@ class Solution:
 
 solution = Solution(
     first_k_digits=10,
-    numbers_string=numbers
+    numbers_string=NUMBERS
 )
 print(solution.first_k_digits_of_sum())
