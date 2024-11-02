@@ -14,21 +14,21 @@ Find the sum of all the multiples of 3 or 5 below 1000. */
 using namespace std; // avoid using std:: before each standard lib component
 
 
-list<int> numberMultiplesOfThreeOrFive(int below) {
-    list<int> MultiplesOfThreeOrFive = {};
+list<int> multiplesOfThreeOrFive(int below) {
+    list<int> multiplesOfThreeOrFive = {};
     for (int i = 1; i < below; i++) {
         if (i % 3 == 0 || i % 5 == 0) {
-            MultiplesOfThreeOrFive.push_back(i);
+            multiplesOfThreeOrFive.push_back(i);
         };
     };
-    return MultiplesOfThreeOrFive;
+    return multiplesOfThreeOrFive;
 };
 
 
 int sumMultiplesOfThreeOrFive(int below) {
-    list<int> MultiplesOfThreeOrFive = numberMultiplesOfThreeOrFive(below);
+    list<int> multiples = multiplesOfThreeOrFive(below);
     int sum = 0;
-    for (int i : MultiplesOfThreeOrFive) {
+    for (int i : multiples) {
         sum = sum + i;
     }
     return sum;
