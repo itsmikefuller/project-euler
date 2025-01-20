@@ -31,21 +31,59 @@ class Date:
                  date: int,
                  month: int,
                  year: int):
-        if self.admissible_date((date, month, year)):
-            self.date = (date, month, year)
-            self.days = days
+        self.test_date = (date, month, year)
+        if self._admissible_date(self.test_date):
+            self.date = self.test_date
+
+
+    def _admissible_date(self) -> bool:
+        date = self.test_date[0]
+        month = self.test_date[1]
+        year = self.test_date[2]
+
+        if month not in range(1, 13):
+            return False
+        elif month in [4, 6, 9, 11] and date not in range(1, 31):
+            return False
+        elif month == 2 and self.is_leap_year(year) and date not in range(1, 30):
+            return False
+        elif month == 2 and not self.is_leap_year(year) and date not in range(1, 29):
+            return False
+        else:
+            return True
+            
+        
+    def is_leap_year(self, year: int) -> bool:
+        if year % 4 == 0:
+            if year % 400 == 0: return True
+            elif year % 100 == 0: return False
+            else: return True
+        return False
 
     
-    # TODO: Fully build admissible_date function
-    def admissible_date(self, test_date: tuple[int]) -> bool:
-        date = test_date[0]
-        month = test_date[1]
-        year = test_date[2]
+    def next(self, date: tuple[int]) -> tuple[int]:
+        date = self.test_date[0]
+        month = self.test_date[1]
+        year = self.test_date[2]
 
-        # 1 <= date <= 31, 1 <= month <= 12
-        if date not in range(1, 32) or month not in range(1, 13):
+        if self._admissible_date((date + 1, month, year)):
+            return (date + 1, month, year)
+        elif self._admissible_date((1, month + 1, year)):
+            return (1, month + 1, year)
+        else:
+            return (1, 1, year + 1)
+
+    
+    def is_sunday(self, date: tuple[int]) -> bool:
+        if not self._admissible_date(date): 
             return False
+        elif date == (1, 1, 1900): 
+            return True
         
-        # date special cases
-        if month in [4, 6, 9, 11] and date not in range(1, 31):
-            return False
+        counter = 0
+        test_date = (1, 1, 1900)
+        while test_date != date:
+            counter += 1
+            test_date = self.next(test_date)
+        
+        return (counter % 7 == 0)
